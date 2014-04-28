@@ -1,0 +1,84 @@
+body {
+	background: #444;
+	color: #EEE;
+	font-family: 'Tahoma';
+	font-size: 10pt;
+}
+
+div.top-bar {
+	background: #000;
+	color: #FFF;
+	font-size: 16pt;
+	padding: 10px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	border-bottom: 1px solid #777;
+}
+
+div.content {
+	margin-top: 55px;
+}
+
+div.entry {
+	border: 1px solid #777;
+	padding: 5px;
+	margin-left: 10%;
+	width: 50%;
+	margin-bottom: 10px;
+}
+
+div.message h1 {
+	font-family: 'Cambria';
+	margin-left: auto;
+	margin-right: auto;
+}
+
+span.entry-header {
+	color: #777;
+}
+
+hr {
+	border: none;
+	border-bottom: 1px solid #555;
+}
+
+.form textarea {
+	background: inherit;
+	color: inherit;
+	border: 1px solid #777;
+	width: 100%;
+	height: 25px;
+	outline: none;
+	transition: height 1s;
+}
+
+.form textarea:focus {
+	border: 1px solid #AAA;
+	height: 75px;
+}
+
+.form input[type = 'submit'] {
+	background: inherit;
+	color:  inherit;
+	border: 1px solid #777;
+	margin: 0px;
+	border-top: none;
+	width: 150px;
+	outline: none;
+}
+
+.form input[type = 'submit']:hover {
+	background: #777;
+}
+
+.top-bar a:link { color: #FFF; text-decoration: none; }
+.top-bar a:active { color: #FFF; text-decoration: none; }
+.top-bar a:visited { color: #FFF; text-decoration: none; }
+.top-bar a:hover { color: #EEE; text-decoration: none; }
+
+a:link { color: #ABCDEF; text-decoration: none; }
+a:active { color: #ABCDEF; text-decoration: none; }
+a:visited { color: #ABCDEF; text-decoration: none; }
+a:hover { color: #ABCDEF; text-decoration: underline; }

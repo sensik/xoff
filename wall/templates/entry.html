@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class = "entry">
+<span class = "entry-header">
+<a href = "http://localhost:8000/entry/{{ entry.pk }}">#</a>
+<a href = "http://localhost:8000/author/{{ entry.author }}" class = "author"><b>{{ entry.author }}</b></a> |
+{{ entry.date|date:'d.m.y h:i' }}</span>
+<hr>
+{{ entry.content|safe }}
+</div>
+
+{% endblock %}
