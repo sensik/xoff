@@ -22,3 +22,19 @@ class Entry(models.Model):
 		self.author = 'xxxx'
 		self.date = datetime.datetime.now()
 		super(Entry, self).save()
+		
+class Comment(models.Model):
+	slug = models.CharField(max_length = 50, editable = False)
+	content = models.TextField()
+	entry_id = models.CharField(max_length = 50)
+	date = models.DateTimeField()
+	author = models.CharField(max_length = 50)
+	
+	def __str__(self):
+		return str(self.entry_id) + ' -- ' + self.slug
+		
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.content[:35])
+		self.author = 'xxxx'
+		self.date = datetime.datetime.now()
+		super(Comment, self).save(*args, **kwargs)

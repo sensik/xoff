@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from wall.models import Entry
-from wall.forms import EntryForm
+from wall.models import Entry, Comment
+from wall.forms import EntryForm, CommentForm
 from django.http import HttpResponseRedirect
 import datetime, re
 
@@ -8,19 +8,6 @@ def tagify(aText):
 	aText = re.sub(r'#[a-zA-Z0-9]*', lambda m: m.group(0).lower(), aText)
 	aText = re.sub(r'#(?P<tag>[a-zA-Z0-9]*)', '#<a href = "/tag/\g<tag>">\g<tag></a>', aText)
 	return aText
-
-'''def parsetags(aText):
-	tags = []
-	for tag in range(aText.count('#')):
-		aText = aText.split('#', 1)[1]
-		try:
-			if aText[0] != '#':
-				tags.append(aText.split(' ')[0])
-		except IndexError:
-			return []
-		while '' in tags:
-			del tags[tags.index('')]
-	return tags'''
 
 def allEntries(request):
 	entries = Entry.objects.all().order_by('-date')
@@ -36,8 +23,16 @@ def allEntries(request):
 
 def detailEntry(request, pk):
 	entry = Entry.objects.all().filter(pk = pk)[0]
+	comments = Comment.objects.all().filter(entry_id = pk)
+	for comment in comments:
+		comment.content = tagify(comment.content)
+	form = CommentForm(request.POST or None, initial = {'entry_id' : pk}) # ugly - to be improved
+	if request.POST:
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect('')
 	entry.content = tagify(entry.content)
-	context = {'entry' : entry}
+	context = {'entry' : entry, 'comments': comments, 'form': form}
 	return render(request, 'entry.html', context)
 
 def tag(request, tag):

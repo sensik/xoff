@@ -29,6 +29,14 @@ div.entry {
 	margin-bottom: 10px;
 }
 
+div.entry:target {
+	border: 1px solid #AAA;
+}
+
+div.comment {
+	margin-left: 15%;
+}
+
 div.message h1 {
 	font-family: 'Cambria';
 	margin-left: auto;
@@ -71,6 +79,10 @@ hr {
 
 .form input[type = 'submit']:hover {
 	background: #777;
+}
+
+#id_entry_id {
+	display: none;
 }
 
 .top-bar a:link { color: #FFF; text-decoration: none; }

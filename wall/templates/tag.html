@@ -10,8 +10,8 @@
 
 <div class = "entry">
 <span class = "entry-header">
-<a href = "http://localhost:8000/entry/{{ entry.pk }}">#</a>
-<a href = "http://localhost:8000/author/{{ entry.author }}" class = "author"><b>{{ entry.author }}</b></a> |
+<a href = "/entry/{{ entry.pk }}">#</a>
+<a href = "/author/{{ entry.author }}" class = "author"><b>{{ entry.author }}</b></a> |
 {{ entry.date|date:'d.m.y H:i' }}</span>
 <hr>
 {{ entry.content|safe }}
