@@ -1,6 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-import datetime
+import datetime, re
 
 class Entry(models.Model):
 	slug = models.CharField(max_length = 50, editable = False)
@@ -14,16 +14,8 @@ class Entry(models.Model):
 		
 	def save(self, *args, **kwargs):
 		def parsetags(aText):
-			tags = []
-			for tag in range(aText.count('#')):
-				aText = aText.split('#', 1)[1]
-				try:
-					if aText[0] != '#':
-						tags.append(aText.split(' ')[0])
-				except IndexError:
-					return []
-				while '' in tags:
-					del tags[tags.index('')]
+			alltags = re.findall(r'#(?P<tag>[a-zA-Z0-9]*)', aText)
+			tags = [tag.lower() for tag in alltags]
 			return ', '.join(tags)
 		self.tags = parsetags(self.content)
 		self.slug = slugify(self.content[:35])
