@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<div class = "container">
 <div class = "entry form">
 <form action = "" method = "post">
 {% csrf_token %}
@@ -21,6 +22,25 @@
 {{ entry.content|safe }}
 </div>
 
+{% for comment in comments %}
+
+{% if comment.entry_id == entry.pk %}
+
+<div class = "entry comment" id = "comment{{ comment.pk }}">
+<span class = "entry-header">
+<a href = "#comment{{ comment.pk }}">#</a>
+<a href = "/author/{{ comment.author }}" class = "author"><b>{{ comment.author }}</b></a> |
+{{ comment.date|date:'d.m.y h:i' }}</span>
+<hr>
+{{ comment.content|safe }}
+</div>
+
+{% endif %}
+
 {% endfor %}
+
+{% endfor %}
+
+</div>
 
 {% endblock %}

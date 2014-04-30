@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class = "message">
+<h1>all tags</h1>
+<h1>
+
+{% for tag in tags %}
+
+#<a href = "/tag/{{ tag }}">{{ tag }}</a>
+
+{% endfor %}
+</h1>
+</div>
+
+{% endblock %}

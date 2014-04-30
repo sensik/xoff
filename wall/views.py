@@ -11,6 +11,9 @@ def tagify(aText):
 
 def allEntries(request):
 	entries = Entry.objects.all().order_by('-date')
+	comments = Comment.objects.all()
+	for comment in comments:
+		comment.entry_id = int(comment.entry_id)
 	form = EntryForm(request.POST or None)
 	if request.POST:
 		if form.is_valid():
@@ -18,7 +21,7 @@ def allEntries(request):
 		return HttpResponseRedirect('')
 	for entry in entries:
 		entry.content = tagify(entry.content)
-	context = {'entries' : entries, 'form' : form}
+	context = {'entries' : entries, 'form' : form, 'comments' : comments}
 	return render(request, 'entries.html', context)
 
 def detailEntry(request, pk):
@@ -42,6 +45,13 @@ def tag(request, tag):
 		entry.content = tagify(entry.content)
 	context = {'entries' : tagentries, 'tag': tag}
 	return render(request, 'tag.html', context)
+	
+def tags(request):
+	entries = Entry.objects.all()
+	tags = [entry.tags for entry in entries]
+	tags = ', '.join(tags).split(', ')
+	context = {'tags' : tags}
+	return render(request, 'tags.html', context)
 
 def author(request, author):
 	entries = Entry.objects.all().order_by('-date')

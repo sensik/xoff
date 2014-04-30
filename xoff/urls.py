@@ -12,7 +12,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^entry/', include('wall.urls')),
-	url(r'^tag/', include('wall.urls')),
+	url(r'^tag/$', 'wall.views.tags', name = 'tags'),
+	url(r'^tag/(?P<tag>[a-z0-9]+)/$', 'wall.views.tag', name = 'tag'),
 	url(r'^author/(?P<author>[a-zA-Z0-9]+)/$', 'wall.views.author', name = 'author'),
 	url(r'^$', 'wall.views.allEntries', name = 'allEntries'),
 )
