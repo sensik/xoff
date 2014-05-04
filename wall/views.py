@@ -13,14 +13,26 @@ def tagify(aText):
 
 def allEntries(request):
 	entries = Entry.objects.all().order_by('-date')
+	entry_pks = list(range(Entry.objects.all().order_by('-pk')[0].pk + 1))[1:] # wtf
 	comments = Comment.objects.all()
+	comments_by_entry_id = [Comment.objects.all().filter(entry_id = i) for i in entry_pks]
+	
+	for entry in entries:
+		if len(comments_by_entry_id[entry.pk - 1]) > 0:
+			entry.is_commented = True
+		else:
+			entry.is_commented = False
+	
 	for comment in comments:
 		comment.entry_id = int(comment.entry_id)
+	
 	form = EntryForm(request.POST or None, initial = {'author': request.user.username})
+	
 	if request.POST:
 		if form.is_valid():
 			form.save()
 		return HttpResponseRedirect('')
+	
 	for entry in entries:
 		entry.content = tagify(entry.content)
 	context = {'entries': entries, 'form': form, 'comments': comments, 'logged': request.user.is_authenticated(), 'username': request.user.username}

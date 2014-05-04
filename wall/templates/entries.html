@@ -3,6 +3,9 @@
 {% block content %}
 
 <div class = "container">
+
+{% if logged %}
+
 <div class = "entry form">
 <form action = "" method = "post">
 {% csrf_token %}
@@ -10,6 +13,8 @@
 <input type = "submit" value = "add">
 </form>
 </div>
+
+{% endif %}
 
 {% for entry in entries %}
 
@@ -24,7 +29,15 @@
 </span>
 <hr>
 {{ entry.content|safe }}
+
+{% if entry.is_commented %}
+<div class = "showcomments">
+<a href = "/entry/{{ entry.pk }}">there are comments in this thread</a>
 </div>
+{% endif %}
+</div>
+
+<!--
 
 {% for comment in comments %}
 
@@ -46,6 +59,8 @@
 {% endif %}
 
 {% endfor %}
+
+-->
 
 {% endfor %}
 

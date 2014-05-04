@@ -25,6 +25,8 @@
 
 {% endfor %}
 
+{% if logged %}
+
 <div class = "entry form comment">
 <form action = "" method = "post">
 {% csrf_token %}
@@ -33,5 +35,7 @@
 </form>
 </div>
 </div>
+
+{% endif %}
 
 {% endblock %}
