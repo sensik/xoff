@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class = "message">
+<h1>{{ dupa }}</h1>
+</div>
+
+<div class = "form">
+<form action = "" method = "post">
+{% csrf_token %}
+<input type = "text" name = "dupa">
+<input type = "submit" value = "ok">
+</form>
+</div>
+
+{% endblock %}

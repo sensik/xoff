@@ -17,7 +17,11 @@
 <span class = "entry-header">
 <a href = "/entry/{{ entry.pk }}">#</a>
 <a href = "/author/{{ entry.author }}" class = "author"><b>{{ entry.author }}</b></a> |
-{{ entry.date|date:'d.m.y H:i' }}</span>
+{{ entry.date|date:'d.m.y H:i' }}
+{% if user.is_superuser %}
+<a href = "/admin/wall/entry/{{ entry.pk }}/delete" class = "del">del</a>
+{% endif %}
+</span>
 <hr>
 {{ entry.content|safe }}
 </div>
@@ -30,7 +34,11 @@
 <span class = "entry-header">
 <a href = "#comment{{ comment.pk }}">#</a>
 <a href = "/author/{{ comment.author }}" class = "author"><b>{{ comment.author }}</b></a> |
-{{ comment.date|date:'d.m.y h:i' }}</span>
+{{ comment.date|date:'d.m.y h:i' }}
+{% if user.is_superuser %}
+<a href = "/admin/wall/comment/{{ comment.pk }}/delete" class = "del">del</a>
+{% endif %}
+</span>
 <hr>
 {{ comment.content|safe }}
 </div>

@@ -28,6 +28,7 @@ div.container {
 
 div.entry {
 	border: 1px solid #777;
+	background: #555;
 	padding: 5px;
 	margin-bottom: 10px;
 }
@@ -52,7 +53,7 @@ span.entry-header {
 
 hr {
 	border: none;
-	border-bottom: 1px solid #555;
+	border-bottom: 1px solid #666;
 }
 
 .form textarea {
@@ -70,7 +71,7 @@ hr {
 	height: 75px;
 }
 
-.form input[type = 'submit'] {
+.form input[type = 'submit'], input[type = 'text'], input[type = 'password'] {
 	background: inherit;
 	color:  inherit;
 	border: 1px solid #777;
@@ -84,7 +85,7 @@ hr {
 	background: #777;
 }
 
-#id_entry_id {
+#id_entry_id, #id_author {
 	display: none;
 }
 
@@ -92,6 +93,11 @@ hr {
 .top-bar a:active { color: #FFF; text-decoration: none; }
 .top-bar a:visited { color: #FFF; text-decoration: none; }
 .top-bar a:hover { color: #EEE; text-decoration: none; }
+
+a.del:link { color: #777; text-decoration: none; }
+a.del:active { color: #777; text-decoration: none; }
+a.del:visited { color: #777; text-decoration: none; }
+a.del:hover { color: #AAA; text-decoration: none; }
 
 a:link { color: #ABCDEF; text-decoration: none; }
 a:active { color: #ABCDEF; text-decoration: none; }

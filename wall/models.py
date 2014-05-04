@@ -19,7 +19,6 @@ class Entry(models.Model):
 			return ', '.join(tags)
 		self.tags = parsetags(self.content)
 		self.slug = slugify(self.content[:35])
-		self.author = 'xxxx'
 		self.date = datetime.datetime.now()
 		super(Entry, self).save()
 		
@@ -35,6 +34,5 @@ class Comment(models.Model):
 		
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.content[:35])
-		self.author = 'xxxx'
 		self.date = datetime.datetime.now()
 		super(Comment, self).save(*args, **kwargs)
