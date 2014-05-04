@@ -1,17 +1,17 @@
 <div style = "float: right; margin-right: 20px;">
 
-<a href = "/signin/">
-
 {% if logged %}
 
-@{{ username }}
+{% if user.is_superuser %}
+<a href = "/admin/">admin</a> |
+{% endif %}
+
+<a href = "/signin/">@{{ username }}</a>
 
 {% else %}
 
-sign in
+<a href = "/signin/">sign in</a>
 
 {% endif %}
-
-</a>
 
 </div>

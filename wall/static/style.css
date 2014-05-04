@@ -47,6 +47,27 @@ div.message h1 {
 	margin-right: auto;
 }
 
+div.showcomments {
+	border-top: 1px solid #444;
+	margin: 0px;
+	margin-top: 10px;
+	padding-top: 5px;
+	text-align: center;
+	width: 100%;
+	position: relative;
+	bottom: 0px;
+}
+
+div.footer {
+	border-top: 1px solid #777;
+	margin: 0px;
+	margin-top: 100px;
+	padding-top: 5px;
+	width: 100%;
+	position: relative;
+	bottom: 0px;
+}
+
 span.entry-header {
 	color: #777;
 }
@@ -98,6 +119,11 @@ a.del:link { color: #777; text-decoration: none; }
 a.del:active { color: #777; text-decoration: none; }
 a.del:visited { color: #777; text-decoration: none; }
 a.del:hover { color: #AAA; text-decoration: none; }
+
+.showcomments a:link { color: #AAA; text-decoration: none; }
+.showcomments a:active { color: #AAA; text-decoration: none; }
+.showcomments a:visited { color: #AAA; text-decoration: none; }
+.showcomments a:hover { color: #777; text-decoration: none; }
 
 a:link { color: #ABCDEF; text-decoration: none; }
 a:active { color: #ABCDEF; text-decoration: none; }

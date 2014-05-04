@@ -18,5 +18,5 @@ urlpatterns = patterns('',
 	url(r'^tag/(?P<tag>[a-z0-9]+)/$', 'wall.views.tag', name = 'tag'),
 	url(r'^author/(?P<author>[a-zA-Z0-9]+)/$', 'wall.views.author', name = 'author'),
 	url(r'^$', 'wall.views.allEntries', name = 'allEntries'),
-	url(r'^post/$', 'wall.views.post', name = 'post')
+	url(r'^info/', include('info.urls')),
 )
