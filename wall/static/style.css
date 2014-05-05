@@ -17,6 +17,17 @@ div.top-bar {
 	border-bottom: 1px solid #777;
 }
 
+div.article-container {
+	background: #666;
+	border: 1px solid #AAA;
+	padding: 10px;
+}
+
+div.article {
+	width: 550px;
+	margin-left: 10%;
+}
+
 div.content {
 	margin-top: 55px;
 }

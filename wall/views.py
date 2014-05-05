@@ -62,7 +62,7 @@ def tag(request, tag):
 	
 def tags(request):
 	entries = Entry.objects.all()
-	tags = [entry.tags for entry in entries]
+	tags = [entry.tags for entry in entries if len(entry.tags) > 0]
 	tags = ', '.join(tags).split(', ')
 	context = {'tags': tags, 'logged': request.user.is_authenticated(), 'username': request.user.username}
 	return render(request, 'tags.html', context)
