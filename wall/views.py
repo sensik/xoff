@@ -6,9 +6,19 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login as auth_login
 import datetime, re
 
-def tagify(aText):
-	aText = re.sub(r'#[a-zA-Z0-9]*', lambda m: m.group(0).lower(), aText)
-	aText = re.sub(r'#(?P<tag>[a-zA-Z0-9]*)', '#<a href = "/tag/\g<tag>">\g<tag></a>', aText)
+def tagify(aText): # now it's overall markdown function
+	aText = re.sub(r'#[a-zA-Z0-9]*', lambda m: m.group(0).lower(), aText) 										# make all tags lowercase
+	aText = re.sub(r'#(?P<tag>[a-zA-Z0-9]*)', '#<a href = "/tag/\g<tag>">\g<tag></a>', aText) 					# tags to urls
+	aText = re.sub(r'@(?P<author>[a-zA-Z0-9]+)', '@<a href = "/author/\g<author>">\g<author></a>', aText) 		# nicks to urls
+	aText = re.sub(r'\[\[(?P<url>http://.+)\|(?P<title>.+)\]\]', '<a href = "\g<url>">\g<title></a>', aText)	# urls markdown - this works better
+	#aText = re.sub(r'\[(?P<title>.+)\]\((?P<url>.+)\)', '<a href = "\g<url>">\g<title></a>', aText)			# urls markdown	- to be fixed
+	aText = re.sub(r'http://(?P<href>.+)(\n| )', '<a href = "\g<href>">http://\g<href></a>', aText)				# http:// to url
+	aText = re.sub(r'\*\*(?P<text>.+)\*\*', '<b>\g<text></b>', aText) 											# double asterisks to bold text
+	aText = re.sub(r'__(?P<text>.+)__', '<i>\g<text></i>', aText)												# double underscores to italics
+	aText = re.sub(r'`(?P<text>.+)`', '<code>\g<text></code>', aText)											# gravis to code
+	aText = re.sub(r'(^>|\n>)(?P<text>.+)', '<blockquote>\g<text></blockquote>', aText)							# > on newline to blockquote
+	aText = re.sub(r'(^!|\n!)(?P<text>.+)', '<span class = "spoiler">\g<text></span>', aText)
+	aText = re.sub(r'\n', '<br>', aText) 																		# newline to breakline
 	return aText
 
 def allEntries(request):
@@ -43,7 +53,7 @@ def detailEntry(request, pk):
 	comments = Comment.objects.all().filter(entry_id = pk)
 	for comment in comments:
 		comment.content = tagify(comment.content)
-	form = CommentForm(request.POST or None, initial = {'entry_id': pk, 'author': request.user.username}) # ugly - to be improved
+	form = CommentForm(request.POST or None, initial = {'entry_id': pk, 'author': request.user.username, 'content': '@' + entry.author + ': '}) # ugly - to be improved
 	if request.POST:
 		if form.is_valid():
 			form.save()

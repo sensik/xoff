@@ -79,6 +79,18 @@ div.footer {
 	bottom: 0px;
 }
 
+span.spoiler {
+	background: #555;
+	background-image: url('spoiler.png');
+	color: rgba(0,0,0,0);
+	padding: 2px;
+}
+
+span.spoiler:hover {
+	background-image: none;
+	color: #EEE;
+}
+
 span.entry-header {
 	color: #777;
 }
@@ -86,6 +98,17 @@ span.entry-header {
 hr {
 	border: none;
 	border-bottom: 1px solid #666;
+}
+
+blockquote {
+	background: rgba(255,255,255,0.1);
+	padding: 5px;
+	border-left: 5px solid #AAA;
+	font-style: italic;
+	margin: 0px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 5px;
 }
 
 .form textarea {
