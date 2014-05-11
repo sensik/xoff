@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class = "message">
+<h1>{{ loggedmessage }}</h1>
+</div>
+
+{{ smallmessage|safe }}
+
+{% if not logged %}
+
+<div class = "form">
+<form action = "" method = "post">
+{% csrf_token %}
+<input type = "text" name = "login" placeholder = "login"></input><br>
+<input type = "password" name = "password" placeholder = "password"></input><br>
+<input type = "password" name = "confirm" placeholder = "confirm password"></input><br>
+<input type = "submit" value = "create account"></input>
+</form>
+</div>
+
+<hr>
+
+Already have an account? <a href = "/login/">Sign in.</a>
+
+{% endif %}
+
+{% endblock %}

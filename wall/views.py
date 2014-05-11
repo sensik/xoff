@@ -7,18 +7,44 @@ from django.contrib.auth import authenticate, logout, login as auth_login
 import datetime, re
 
 def tagify(aText): # now it's overall markdown function
-	aText = re.sub(r'#[a-zA-Z0-9]*', lambda m: m.group(0).lower(), aText) 										# make all tags lowercase
-	aText = re.sub(r'#(?P<tag>[a-zA-Z0-9]*)', '#<a href = "/tag/\g<tag>">\g<tag></a>', aText) 					# tags to urls
-	aText = re.sub(r'@(?P<author>[a-zA-Z0-9]+)', '@<a href = "/author/\g<author>">\g<author></a>', aText) 		# nicks to urls
-	aText = re.sub(r'\[\[(?P<url>http://.+)\|(?P<title>.+)\]\]', '<a href = "\g<url>">\g<title></a>', aText)	# urls markdown - this works better
+	# make all tags lowercase
+	aText = re.sub(r'#[a-zA-Z0-9]*', lambda m: m.group(0).lower(), aText)
+	
+	# tags to urls
+	aText = re.sub(r'#(?P<tag>[a-zA-Z0-9]*)', '#<a href = "/tag/\g<tag>">\g<tag></a>', aText)
+	
+	# nicks to urls
+	aText = re.sub(r'@(?P<author>[a-zA-Z0-9]+)', '@<a href = "/author/\g<author>">\g<author></a>', aText)
+	
+	# problems
+	#aText = re.sub(r'\[\[http://(?P<url>.+)\|(?P<title>.+)\]\]', '<a href = "http://\g<url>">\g<title></a>', aText)	# urls markdown - this works better
 	#aText = re.sub(r'\[(?P<title>.+)\]\((?P<url>.+)\)', '<a href = "\g<url>">\g<title></a>', aText)			# urls markdown	- to be fixed
-	aText = re.sub(r'http://(?P<href>.+)(\n| )', '<a href = "\g<href>">http://\g<href></a>', aText)				# http:// to url
-	aText = re.sub(r'\*\*(?P<text>.+)\*\*', '<b>\g<text></b>', aText) 											# double asterisks to bold text
-	aText = re.sub(r'__(?P<text>.+)__', '<i>\g<text></i>', aText)												# double underscores to italics
-	aText = re.sub(r'`(?P<text>.+)`', '<code>\g<text></code>', aText)											# gravis to code
-	aText = re.sub(r'(^>|\n>)(?P<text>.+)', '<blockquote>\g<text></blockquote>', aText)							# > on newline to blockquote
-	aText = re.sub(r'(^!|\n!)(?P<text>.+)', '<span class = "spoiler">\g<text></span>', aText)
-	aText = re.sub(r'\n', '<br>', aText) 																		# newline to breakline
+	#aText = re.sub(r'http://(?P<href>(.+/)+)(\n| )', '<a href = "\g<href>">http://\g<href></a>', aText)				# http:// to url
+	
+	# double asterisks to bold text
+	aText = re.sub(r'\*\*(?P<text>(.+\n?)+)\*\*', '<b>\g<text></b>', aText)
+	
+	# double underscores to italics
+	aText = re.sub(r'__(?P<text>(.+\n?)+)__', '<i>\g<text></i>', aText)
+	
+	# gravis to code
+	aText = re.sub(r'`(?P<text>(.+\n?)+)`', '<code>\g<text></code>', aText)
+	
+	# > on newline to blockquote
+	aText = re.sub(r'(^>|\n>)(?P<text>.+)', '<blockquote>\g<text></blockquote>', aText)
+	
+	# ! on newline to spoiler
+	aText = re.sub(r'(^!|\n!)(?P<text>.+)', '<div class = "spoiler">\g<text></div>', aText)
+	
+	# newline to breakline
+	aText = re.sub(r'\n', '<br>', aText)
+	
+	# 4 spaces to \t
+	aText = re.sub(r'    ', '<pre>\t</pre>', aText)
+	
+	# raw url to hyperlink
+	aText = re.sub(r'(?P<href>http://.+\.[a-z]{2,4})', '<a href = "\g<href>">\g<href></a>', aText)
+	
 	return aText
 
 def allEntries(request):
@@ -106,7 +132,6 @@ def signin(request):
 		else:
 			context = {'loggedmessage': 'something went wrong :(', 'logged': request.user.is_authenticated(), 'username': request.user.username}
 			return render(request, 'login.html', context)
-		#context = {'login': login, 'password': password}
 	else:
 		context = {'loggedmessage': loggedmessage, 'logged': request.user.is_authenticated(), 'username': request.user.username, 'smallmessage': smallmessage}
 	return render(request, 'login.html', context)
@@ -114,19 +139,11 @@ def signin(request):
 def signout(request):
 	logout(request)
 	return HttpResponseRedirect('/../')
-
-def post(request):
-	if request.POST:
-		dupa = request.POST
-		context = {'dupa': dupa.get('dupa')}
-	else:
-		context = {'dupa': 0}
-	return render(request, 'post.html', context)
 	
-'''def logintag(request): # doesn't work properly, to be fixed
+def register(request):
 	if request.user.is_authenticated():
-		username = request.user.username
+		loggedmessage = 'You are already signed in, @' + request.user.username
 	else:
-		username = None
-	context = {'username': username, 'logged': request.user.is_authenticated()}
-	return render(request, 'logintag.html', context)'''
+		loggedmessage = 'sign up'
+	context = {'loggedmessage': loggedmessage, 'logged': request.user.is_authenticated(), 'username': request.user.username}
+	return render(request, 'register.html', context)
